@@ -20,7 +20,7 @@ python run bestbuy_main.py
 ```
 ### Example
 
-![Output]<img src="Examples/result_figure.png">
+<img src="Examples/result_figure.png">
 
 ### Future Functions
  - Monitor other websites such as Newegg.com
