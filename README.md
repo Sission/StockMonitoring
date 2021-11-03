@@ -23,7 +23,7 @@ python run bestbuy_main.py
 <img src="Examples/result_figure.png">
 
 ### Future Functions
- - Monitor other websites such as Newegg.com
+ - Monitor other websites such as Newegg.com, Micro Center
  - Send notification via text or Webhook
  - Pay for the item automatically 
  - Docker package
