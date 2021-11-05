@@ -4,6 +4,12 @@
 
 It is a stock monitoring script. This repository is still under developing.
 
+### Monitoring Websites (for now)
+
+- BestBuy
+- Adorama (Can not bypass the CAPTCHA now. Working on that)
+- MicroCenter (Location: MA; changeable)
+
 ## Getting Started
 
 ### Prerequisites & Installing
@@ -12,19 +18,34 @@ It is a stock monitoring script. This repository is still under developing.
 pip install selenium
 git clone https://github.com/Sission/StockMonitoring.git
 ```
-Add the url of your desired item in to *bestbuy_url.txt*
+Add the url of your desired item in to *url.txt*
 
-### Executing program
+### Executing Program
+
 ```
-python run bestbuy_main.py
+python run main.py --print_format <format>
 ```
+
+
 ### Example
+#### Table mode
 
-<img src="Examples/result_figure.png">
+```
+python run main.py --print_format "Tabel"
+```
+<img src="Examples/TableOutput.png">
+
+#### Flow mode
+
+```
+python run main.py --print_format "Flow"
+```
+
+<img src="Examples/FlowOutput.png">
 
 ### Future Functions
- - Monitor other websites such as Newegg.com, Micro Center
+ - Monitor other websites such as Newegg.com
  - Send notification via text or Webhook
- - Pay for the item automatically 
+ - Automatically check out
  - Docker package
  
