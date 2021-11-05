@@ -14,6 +14,7 @@ It is a stock monitoring script. This repository is still under developing.
 
 ### Prerequisites & Installing
 
+This script is being tested on macOS. For Windows and Ubuntu user, replacing selenium driver should be necessary.
 ```
 pip install selenium
 git clone https://github.com/Sission/StockMonitoring.git
