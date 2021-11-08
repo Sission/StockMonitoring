@@ -69,7 +69,6 @@ def main(args):
         bots, num = classify(url_path=url_path, st=st)
         print("Bots loaded!")
         api_key, user_id = telegram_info(tele_path)
-        print('Telegram bot loaded')
     except (Exception,):
         print('Bots load failed')
         raise
@@ -79,6 +78,7 @@ def main(args):
         for bot in bots:
             bot.load_page()
         print("Pages loaded!")
+        telegram_communicator(api_key, user_id, 'Stock Monitor is loaded')
 
         if PRINT_FORMAT == 'Table':
             os.system('cls' if os.name == 'nt' else 'clear')
