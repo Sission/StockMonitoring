@@ -3,7 +3,7 @@ from restock.adorama_stock import AdoramaStock
 from restock.microcenter_stock import MicroCenterStock
 
 
-def classify(url_path):
+def classify(url_path, st):
     bots = []
     bestbuy = ['bestbuy']
     adorama = ['adorama']
@@ -17,13 +17,13 @@ def classify(url_path):
     for i in range(num):
         merchant = (url[i].split("www.", 1)[1].split(".com", 1)[0])
         if bool([ele for ele in bestbuy if (ele in merchant.lower())]):
-            bots.append(BestBuyStock(url=url[i], merchant='BestBuy'))
+            bots.append(BestBuyStock(url=url[i], merchant='BestBuy', st=st))
 
         elif bool([ele for ele in adorama if (ele in merchant.lower())]):
-            bots.append(AdoramaStock(url=url[i], merchant='Adorama'))
+            bots.append(AdoramaStock(url=url[i], merchant='Adorama',st=st))
 
         elif bool([ele for ele in microcenter if (ele in merchant.lower())]):
-            bots.append(MicroCenterStock(url=url[i], merchant='MicroCenter'))
+            bots.append(MicroCenterStock(url=url[i], merchant='MicroCenter',st=st))
 
         else:
             print('Assign bots failed!')

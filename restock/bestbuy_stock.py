@@ -8,8 +8,8 @@ from prettytable import PrettyTable
 
 
 class BestBuyStock(webdriver.Chrome):
-    def __init__(self, url, merchant, teardown=False):
-        self.st = Setting()
+    def __init__(self, url, merchant, st, teardown=False):
+        self.st = st
         self.teardown = teardown
         self.url = url
         self.st.merchant = merchant
@@ -23,7 +23,7 @@ class BestBuyStock(webdriver.Chrome):
     def load_page(self):
         self.get(self.url)
 
-    def info(self, current_time):
+    def info(self):
         item = self.find_element(By.CLASS_NAME, "sku-title").text
         self.st.item = item
         # print(item)
@@ -37,11 +37,9 @@ class BestBuyStock(webdriver.Chrome):
         # print(price)
 
     def run(self, current_time):
-        self.info(current_time)
+        self.info()
         self.st.time = current_time
         status = self.find_element(
             By.CSS_SELECTOR, 'div[class="fulfillment-add-to-cart-button"]'
         ).text
         self.st.availability = status
-        # self.st.rt_status(status, current_time)
-

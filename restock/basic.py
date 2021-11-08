@@ -1,5 +1,9 @@
 from selenium import webdriver
 import os
+from colorama import init
+import telegram
+
+init()
 
 
 class Colors:
@@ -15,9 +19,10 @@ class Colors:
 
 
 class Setting:
-    def __init__(self):
+    def __init__(self, OS):
         self.PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-        self.DRIVER_PATH = os.path.join(self.PROJECT_ROOT, "../SeleniumDrivers/chromedriver")
+        # self.DRIVER_PATH = os.path.join(self.PROJECT_ROOT, "../SeleniumDrivers/chromedriver")
+        self.DRIVER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, f'SeleniumDrivers/{OS}/chromedriver'))
         self.user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         self.options = webdriver.ChromeOptions()
         self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -26,6 +31,7 @@ class Setting:
         self.options.add_argument(f'user-agent={self.user_agent}')
         self.options.add_argument("--disable-popup-blocking")
         self.options.add_argument("--incognito")
+        self.options.add_argument("--no-sandbox")
         self.no_stock = ['no', 'not', 'sold', 'out']
         self.in_stock = ['cart', 'add']
         self.time = None
@@ -42,3 +48,17 @@ class Setting:
             print(f'[{current_time}]' + Colors.HEADER + ' Status: ' + Colors.OKGREEN + 'In Stock !!' + Colors.ENDC)
         else:
             print(f'[{current_time}]' + Colors.WARNING + " Can't get the status" + Colors.ENDC)
+
+
+def telegram_info(file):
+    with open(file) as f:
+        url = f.readlines()
+        url = [line.rstrip() for line in url]
+    api_key = url[0].split("'", 1)[1].split("'", 1)[0]
+    user_id = url[1].split("'", 1)[1].split("'", 1)[0]
+    return api_key, user_id
+
+
+def telegram_communicator(api_key, user_id, info):
+    bot = telegram.Bot(token=api_key)
+    bot.send_message(chat_id=user_id, text=info)

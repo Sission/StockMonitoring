@@ -1,0 +1,2 @@
+api_key = '2127803429:AAHyu8R3frQ16Op0wPJqd7tXROjih9ttY8g'
+user_id = '1961467450'

@@ -11,8 +11,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 class AdoramaStock(webdriver.Chrome):
-    def __init__(self, url, merchant, teardown=False):
-        st = Setting()
+    def __init__(self, url, merchant, st, teardown=False):
+        self.st = st
         self.teardown = teardown
         self.url = url
         self.st.merchant = merchant
