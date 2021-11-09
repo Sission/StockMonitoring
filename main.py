@@ -102,12 +102,12 @@ def main(args):
 
                 if bot.st.availability and (now - time_marker).seconds > 300:
                     telegram_communicator(api_key, user_id, f'{bot.url}')
-                    time_marker = datetime.now().minute
+                    time_marker = datetime.now()
 
                 if datetime.now().hour > 8 and ((datetime.now().hour + 1) % 2) and (now - time_marker).seconds > 4000:
                     if datetime.now().minute == 0:
                         telegram_communicator(api_key, user_id, 'Stock Monitor is working!!')
-                        time_marker = datetime.now().hour
+                        time_marker = datetime.now()
 
             time.sleep(refresh_rate)
             if TESTING:

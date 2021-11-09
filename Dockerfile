@@ -2,4 +2,4 @@ FROM python:3.8.5
 ADD . /code
 WORKDIR /code
 RUN pip install -r requirements.txt
-CMD ["python", "main.py"]
+ENTRYPOINT ["python", "main.py",'-print_format', 'Flow', '-os','Windows']
