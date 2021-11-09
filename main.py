@@ -99,7 +99,7 @@ def main(args):
                 if avail_status:
                     telegram_communicator(api_key, user_id, f'{bot.st.item} in Stock Now!')
                     telegram_communicator(api_key, user_id, f'{bot.url}')
-                if datetime.now().hour > 8 and (datetime.now().hour % 2)-1:
+                if datetime.now().hour > 8 and ((datetime.now().hour + 1) % 2):
                     if datetime.now().minute == 0:
                         telegram_communicator(api_key, user_id, 'Stock Monitor is working!!')
 
