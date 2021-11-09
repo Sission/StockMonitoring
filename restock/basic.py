@@ -22,8 +22,11 @@ class Colors:
 class Setting:
     def __init__(self, OS):
         self.PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-        # self.DRIVER_PATH = os.path.join(self.PROJECT_ROOT, "../SeleniumDrivers/chromedriver")
-        self.DRIVER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, f'SeleniumDrivers/{OS}/chromedriver'))
+        if OS == 'Windows':
+            self.DRIVER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, r'SeleniumDrivers/Windows/chromedriver.exe'))
+        else:
+            self.DRIVER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, f'SeleniumDrivers/{OS}/chromedriver'))
+
         self.user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         self.options = webdriver.ChromeOptions()
         self.options.add_experimental_option('excludeSwitches', ['enable-logging'])
