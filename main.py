@@ -2,11 +2,10 @@ import os
 import time
 from restock.merchant_classify import classify
 from datetime import datetime
-from restock.basic import Colors, Setting
+from restock.basic import Setting
 from restock.dynamic_monitor import status, table_format, flow_format
 import argparse
 from restock.basic import telegram_communicator, telegram_info
-import schedule
 
 
 def parse_args():
@@ -14,7 +13,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('--print_format', type=str, default='Flow')
     parser.add_argument('--testing', type=bool, default=False)
-    parser.add_argument('--refresh_rate', type=int, default=5)
+    parser.add_argument('--refresh_rate', type=int, default=1)
     parser.add_argument('--os', type=str, default='MacOS')
 
     return check_args(parser.parse_args())
@@ -26,7 +25,7 @@ def parse_args():
 def check_args(args):
     # --printing format
     try:
-        assert args.print_format == 'Table' or args.print_format == 'Flow'
+        assert args.print_format == 'Table' or 'Flow' or 'Silence'
     except (Exception,):
         print('Unsupported printing format')
         return None
@@ -63,6 +62,7 @@ def main(args):
     url_root = os.path.abspath(os.path.dirname(__file__))
     url_path = os.path.join(url_root, "restock/url.txt")
     tele_path = os.path.join(url_root, "restock/telegram_info.txt")
+
     try:
         print('Loading the bots ...')
         st = Setting(OS)
@@ -86,6 +86,7 @@ def main(args):
             table_format('Time', 'Item', 'Merchant', 'Price', 'Availability', title=True)
             print(u'\u2500' * 180, '\n', end='\r')
 
+        time_marker = datetime.now()
         while True:
             for idx, bot in enumerate(bots):
                 bot.refresh()
@@ -93,15 +94,20 @@ def main(args):
                 current_time = now.strftime("%Y-%m-%d %H:%M:%S")
                 bot.run(current_time)
                 if PRINT_FORMAT == 'Table':
-                    avail_status = status(bot, num, idx)
+                    status(bot, num, idx)
                 elif PRINT_FORMAT == 'Flow':
-                    avail_status = flow_format(bot)
-                if avail_status:
-                    telegram_communicator(api_key, user_id, f'{bot.st.item} in Stock Now!')
+                    flow_format(bot)
+                elif PRINT_FORMAT == 'Silence':
+                    pass
+
+                if bot.st.availability and (now - time_marker).seconds > 300:
                     telegram_communicator(api_key, user_id, f'{bot.url}')
-                if datetime.now().hour > 8 and ((datetime.now().hour + 1) % 2):
+                    time_marker = datetime.now().minute
+
+                if datetime.now().hour > 8 and ((datetime.now().hour + 1) % 2) and (now - time_marker).seconds > 4000:
                     if datetime.now().minute == 0:
                         telegram_communicator(api_key, user_id, 'Stock Monitor is working!!')
+                        time_marker = datetime.now().hour
 
             time.sleep(refresh_rate)
             if TESTING:

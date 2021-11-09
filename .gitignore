@@ -1,5 +1,8 @@
 ### Example user template template
 ### Example user template
+#git rm -r –cached .
+#git add .
+#git commit -m “update .gitignore”
 
 # IntelliJ project files
 .idea
@@ -8,4 +11,3 @@ out
 gen
 
 /restock/telegram_info.txt
-/restock/test_ignore.txt

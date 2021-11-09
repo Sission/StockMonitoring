@@ -1,14 +1,5 @@
 from selenium import webdriver
-import restock.basic
-from restock.basic import Colors, Setting
-from datetime import datetime
-import time
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from prettytable import PrettyTable
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.common.exceptions import NoSuchElementException
 
 
 class MicroCenterStock(webdriver.Chrome):
@@ -67,4 +58,4 @@ class MicroCenterStock(webdriver.Chrome):
         status = self.find_element(
             By.CLASS_NAME, 'inventory'
         ).text
-        self.st.availability = status
+        self.st.availability = self.st.status_check(status)

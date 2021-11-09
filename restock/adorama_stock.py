@@ -1,13 +1,4 @@
 from selenium import webdriver
-import restock.basic
-from restock.basic import Colors, Setting
-from datetime import datetime
-import time
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from prettytable import PrettyTable
-from selenium.webdriver.common.action_chains import ActionChains
 
 
 class AdoramaStock(webdriver.Chrome):

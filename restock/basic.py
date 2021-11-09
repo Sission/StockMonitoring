@@ -2,6 +2,7 @@ from selenium import webdriver
 import os
 from colorama import init
 import telegram
+from datetime import datetime
 
 init()
 
@@ -39,15 +40,17 @@ class Setting:
         self.merchant = None
         self.price = None
         self.availability = None
+        self.no_stock = ['no', 'not', 'sold', 'out']
+        self.in_stock = ['cart', 'add']
 
-    def rt_status(self, status, current_time):
-
-        if bool([ele for ele in self.no_stock if (ele in status.lower())]):
-            print(f'[{current_time}]' + Colors.HEADER + ' Status: ' + Colors.WARNING + 'Out of Stock' + Colors.ENDC)
-        elif bool([ele for ele in self.in_stock if (ele in status.lower())]):
-            print(f'[{current_time}]' + Colors.HEADER + ' Status: ' + Colors.OKGREEN + 'In Stock !!' + Colors.ENDC)
+    def status_check(self, availability):
+        if bool([ele for ele in self.no_stock if (ele in availability.lower())]):
+            avail = 0
+        elif bool([ele for ele in self.in_stock if (ele in availability.lower())]):
+            avail = 1
         else:
-            print(f'[{current_time}]' + Colors.WARNING + " Can't get the status" + Colors.ENDC)
+            avail = 2
+        return avail
 
 
 def telegram_info(file):
@@ -62,3 +65,4 @@ def telegram_info(file):
 def telegram_communicator(api_key, user_id, info):
     bot = telegram.Bot(token=api_key)
     bot.send_message(chat_id=user_id, text=info)
+    return datetime.now().hour
