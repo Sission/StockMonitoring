@@ -1,2 +1,11 @@
-##ignore files##
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
 /restock/telegram_info.txt
+/restock/test_ignore.txt
